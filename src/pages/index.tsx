@@ -17,16 +17,6 @@ function FeaturedArticle(props: {
 }) {
   return (
     <div className="relative w-full pt-16 pb-16 border-b px-8">
-      {/* <div
-          className="bg-gray-100 absolute rounded-lg"
-          style={{
-            width: "calc(100% + 5rem)",
-            height: "calc(100% + 5.5rem)",
-            top: "-2.5rem",
-            left: "-2.5rem",
-            zIndex: "-1",
-          }}
-        ></div> */}
       <a
         className="font-semibold tracking-tight hover:opacity-80 transition-all"
         href={"/" + props.path}
@@ -136,7 +126,6 @@ export async function getServerSideProps({ query }: NextPageContext) {
     version: "v5.0",
   });
 
-  // fetch 5 posts, including related tags and authors
   const tab = (query?.tab as string) || "home";
   let posts = Array.from(
     await api.posts.browse({

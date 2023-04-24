@@ -58,12 +58,7 @@ export default function Container({ children }: PropsWithChildren) {
         <div
           className="w-full flex-col border-b"
           style={{
-            // backgroundColor: "rgba(234, 237, 240, 0.8)",
-            // backgroundColor: "rgba(255, 255, 255, 0.9)",
-            // backgroundColor: "rgba(243, 244, 245, 0.85)",
-
             backdropFilter: "blur(16px)",
-            // borderColor: "rgb(223, 227, 231)",
           }}
         >
           <div className="py-4">
@@ -100,14 +95,7 @@ export default function Container({ children }: PropsWithChildren) {
               </div>
             </ResponsiveContainer>
           </div>
-          <div
-            className="flex justify-center space-x-3 border-t"
-            style={
-              {
-                // borderColor: "rgb(223, 227, 231)",
-              }
-            }
-          >
+          <div className="flex justify-center space-x-3 border-t">
             {[
               {
                 title: "Home",

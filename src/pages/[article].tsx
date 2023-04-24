@@ -98,7 +98,6 @@ export async function getServerSideProps(context: NextPageContext) {
     version: "v5.0",
   });
 
-  // fetch 5 posts, including related tags and authors
   let posts = Array.from(
     await api.posts.browse({
       limit: 1000000,
