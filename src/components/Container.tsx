@@ -92,9 +92,9 @@ export default function Container({ children }: PropsWithChildren) {
                   {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                   <a
                     href="/alerts"
-                    className="px-4 py-2.5 rounded-md text-base text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-700 transition-all"
+                    className="px-4 py-2.5 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-700 transition-all"
                   >
-                    <span className="font-semibold">Get Alerts</span> — free
+                    Get Alerts
                   </a>
                 </div>
               </div>
