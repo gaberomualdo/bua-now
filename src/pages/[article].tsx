@@ -70,6 +70,20 @@ export default function Post({ post, section }: any) {
       display: block;
     }
     `}</style>
+          {post.meta_title && (
+            <div className="border-t mt-16 mb-12 pt-8">
+              <h1 className="text-3xl font-semibold tracking-tight mb-8">
+                Discussion
+              </h1>
+              <a
+                href={post.meta_title}
+                target="_blank"
+                className="px-5 py-4 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-700 transition-all"
+              >
+                View Discussion on Instagram
+              </a>
+            </div>
+          )}
         </div>
       </ResponsiveContainer>
     </Container>
