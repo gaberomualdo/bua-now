@@ -103,8 +103,8 @@ export default function Home({ posts, tab }: any) {
                   path={posts[0].path}
                   section={
                     posts[0].primary_tag.name === "opinions"
-                      ? "Opinions"
-                      : "Facts"
+                      ? "opinions"
+                      : "facts"
                   }
                   date={posts[0].updated_at}
                 />
@@ -118,7 +118,7 @@ export default function Home({ posts, tab }: any) {
               subtitle={post.excerpt}
               path={post.path}
               section={
-                post.primary_tag.name === "opinions" ? "Opinions" : "Facts"
+                post.primary_tag.name === "opinions" ? "opinions" : "facts"
               }
               date={post.updated_at}
             />
