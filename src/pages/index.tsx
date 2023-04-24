@@ -1,118 +1,153 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import GhostContentAPI from "@tryghost/content-api";
+import Container from "@/components/Container";
+import ResponsiveContainer from "@/components/Responsive";
+import config from "@/lib/config";
+import Head from "next/head";
+import { NextPageContext } from "next";
+import moment from "moment";
+import atob from "atob";
+import btoa from "btoa";
 
-const inter = Inter({ subsets: ['latin'] })
-
-export default function Home() {
+function FeaturedArticle(props: {
+  title: string;
+  subtitle: string;
+  path: string;
+  section: string;
+  date: Date;
+}) {
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
+    <div className="bg-gray-100 py-20 px-6 rounded-lg">
+      <ResponsiveContainer>
+        <div className="relative w-full">
           <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            className="font-semibold tracking-tight hover:opacity-80 transition-all"
+            href={"/" + props.path}
+            style={{
+              fontSize: "2.35rem",
+            }}
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
+            {props.title}
+          </a>
+          <p className="text-xl opacity-70 font-medium mt-2 mb-3">
+            {moment(props.date).fromNow()} in {props.section}
+          </p>
+          <p className="text-lg opacity-70">{props.subtitle}</p>
+          <div className="mt-8">
+            <a
+              href={"/" + props.path}
+              className="px-5 py-3 rounded-md text-base text-white bg-gray-800 hover:bg-gray-700 active:bg-gray-900 transition-all"
+            >
+              <span className="font-medium">Read Story &rarr;</span>
+            </a>
+          </div>
+        </div>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+function Article(props: {
+  title: string;
+  subtitle: string;
+  path: string;
+  section: string;
+  date: Date;
+}) {
+  return (
+    <div className="border-b py-12">
+      <div className="relative w-full">
+        <a
+          className="font-semibold tracking-tight text-3xl hover:opacity-80 transition-all"
+          href={"/" + props.path}
+        >
+          {props.title}
+        </a>
+        <p className="absolute top-0 right-0 opacity-80 font-medium mt-2 mb-3">
+          {moment(props.date).fromNow()} in {props.section}
+        </p>
+        <p className="text-lg mt-2 opacity-70">{props.subtitle}</p>
+        <div className="mt-8">
+          <a
+            href={"/" + props.path}
+            className="px-5 py-3 rounded-md text-base text-gray-700 bg-gray-200 hover:bg-gray-300 active:bg-gray-300 transition-all"
+          >
+            <span className="font-medium">Read Story &rarr;</span>
           </a>
         </div>
       </div>
+    </div>
+  );
+}
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+export default function Home({ posts, tab }: any) {
+  const mainPosts = tab === "home" ? posts.slice(1) : posts;
+  return (
+    <Container>
+      <Head>
+        <title>{`${config.title} – ${config.subtitle}`}</title>
+        <meta name="description" content={config.description} />
+      </Head>
+      <div className="pb-10">
+        {tab === "home" && (
+          <>
+            {posts[0] && (
+              <FeaturedArticle
+                title={posts[0].title}
+                subtitle={posts[0].excerpt}
+                path={posts[0].path}
+                section={
+                  posts[0].primary_tag.name === "opinions"
+                    ? "Opinions"
+                    : "Facts"
+                }
+                date={posts[0].updated_at}
+              />
+            )}
+          </>
+        )}
+        <ResponsiveContainer>
+          {mainPosts.map((post: any, i: number) => (
+            <Article
+              key={i}
+              title={post.title}
+              subtitle={post.excerpt}
+              path={post.path}
+              section={
+                post.primary_tag.name === "opinions" ? "Opinions" : "Facts"
+              }
+              date={post.updated_at}
+            />
+          ))}
+        </ResponsiveContainer>
       </div>
+    </Container>
+  );
+}
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+export async function getServerSideProps({ query }: NextPageContext) {
+  const api = new GhostContentAPI({
+    url: "https://bua-now.ghost.io",
+    key: "417badf22041f4f6d16a27aaee",
+    version: "v5.0",
+  });
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+  // fetch 5 posts, including related tags and authors
+  const tab = (query?.tab as string) || "home";
+  let posts = Array.from(
+    await api.posts.browse({
+      limit: 1000000,
+      // @ts-ignore
+      include: "tags,authors,-html",
+    })
+  );
+  posts = posts.map((e, i) => ({
+    ...e,
+    excerpt: (e.excerpt || "No description").slice(0, 200) + "...",
+    path: btoa((posts.length - i).toString())
+      .split("=")
+      .join(""),
+  }));
+  if (["facts", "opinions"].includes(tab)) {
+    posts = posts.filter((e) => e?.primary_tag?.name === tab);
+  }
+  return { props: { posts, tab } };
 }
