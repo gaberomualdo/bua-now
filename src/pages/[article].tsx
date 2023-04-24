@@ -42,8 +42,8 @@ export default function Post({ post, section }: any) {
           </h1>
           <p className="text-xl text-gray-700 font-medium pb-5 mb-10 border-b">
             {moment(post.updated_at).fromNow()} in{" "}
-            <span className="capitalize">{section}</span> &nbsp;/&nbsp; BUA Now
-            Staff
+            <span className="capitalize">{section}</span> &nbsp;/&nbsp;{" "}
+            {post.meta_description || "BUA Now Staff"}
           </p>
           <div
             className={sizeClassnames.join(" ")}

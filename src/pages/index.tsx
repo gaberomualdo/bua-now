@@ -16,32 +16,38 @@ function FeaturedArticle(props: {
   date: Date;
 }) {
   return (
-    <div className="bg-gray-100 py-20 px-6 rounded-lg">
-      <ResponsiveContainer>
-        <div className="relative w-full">
-          <a
-            className="font-semibold tracking-tight hover:opacity-80 transition-all"
-            href={"/" + props.path}
-            style={{
-              fontSize: "2.35rem",
-            }}
-          >
-            {props.title}
-          </a>
-          <p className="text-xl opacity-70 font-medium mt-2 mb-3">
-            {moment(props.date).fromNow()} in {props.section}
-          </p>
-          <p className="text-lg opacity-70">{props.subtitle}</p>
-          <div className="mt-8">
-            <a
-              href={"/" + props.path}
-              className="px-5 py-3 rounded-md text-base text-white bg-gray-800 hover:bg-gray-700 active:bg-gray-900 transition-all"
-            >
-              <span className="font-medium">Read Story &rarr;</span>
-            </a>
-          </div>
-        </div>
-      </ResponsiveContainer>
+    <div className="relative w-full pt-16 pb-16 border-b px-8">
+      {/* <div
+          className="bg-gray-100 absolute rounded-lg"
+          style={{
+            width: "calc(100% + 5rem)",
+            height: "calc(100% + 5.5rem)",
+            top: "-2.5rem",
+            left: "-2.5rem",
+            zIndex: "-1",
+          }}
+        ></div> */}
+      <a
+        className="font-semibold tracking-tight hover:opacity-80 transition-all"
+        href={"/" + props.path}
+        style={{
+          fontSize: "2.35rem",
+        }}
+      >
+        {props.title}
+      </a>
+      <p className="text-xl opacity-70 font-medium mt-2 mb-3">
+        {moment(props.date).fromNow()} in {props.section}
+      </p>
+      <p className="text-lg opacity-70">{props.subtitle}</p>
+      <div className="mt-8">
+        <a
+          href={"/" + props.path}
+          className="px-5 py-3 rounded-md text-base text-white bg-gray-800 hover:bg-gray-700 active:bg-gray-900 transition-all"
+        >
+          <span className="font-medium">Read Story &rarr;</span>
+        </a>
+      </div>
     </div>
   );
 }
@@ -53,7 +59,7 @@ function Article(props: {
   date: Date;
 }) {
   return (
-    <div className="border-b py-12">
+    <div className="border-b pt-9 pb-11 px-8">
       <div className="relative w-full">
         <a
           className="font-semibold tracking-tight text-3xl hover:opacity-80 transition-all"
@@ -86,25 +92,25 @@ export default function Home({ posts, tab }: any) {
         <title>{`${config.title} – ${config.subtitle}`}</title>
         <meta name="description" content={config.description} />
       </Head>
-      <div className="pb-10">
-        {tab === "home" && (
-          <>
-            {posts[0] && (
-              <FeaturedArticle
-                title={posts[0].title}
-                subtitle={posts[0].excerpt}
-                path={posts[0].path}
-                section={
-                  posts[0].primary_tag.name === "opinions"
-                    ? "Opinions"
-                    : "Facts"
-                }
-                date={posts[0].updated_at}
-              />
-            )}
-          </>
-        )}
-        <ResponsiveContainer>
+      <ResponsiveContainer>
+        <div className="border-l border-r h-full grow pb-10">
+          {tab === "home" && (
+            <>
+              {posts[0] && (
+                <FeaturedArticle
+                  title={posts[0].title}
+                  subtitle={posts[0].excerpt}
+                  path={posts[0].path}
+                  section={
+                    posts[0].primary_tag.name === "opinions"
+                      ? "Opinions"
+                      : "Facts"
+                  }
+                  date={posts[0].updated_at}
+                />
+              )}
+            </>
+          )}
           {mainPosts.map((post: any, i: number) => (
             <Article
               key={i}
@@ -117,8 +123,8 @@ export default function Home({ posts, tab }: any) {
               date={post.updated_at}
             />
           ))}
-        </ResponsiveContainer>
-      </div>
+        </div>
+      </ResponsiveContainer>
     </Container>
   );
 }
