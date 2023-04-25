@@ -27,7 +27,8 @@ export default function Container({ children }: PropsWithChildren) {
         className={`${
           router.pathname === "/alerts" || router.pathname === "/"
             ? "hidden"
-            : ""
+            : // : ""
+              "hidden"
         } fixed border-t border-gray-700 bg-white px-3 py-3 w-full bottom-0 left-0 z-50`}
         style={{
           backgroundColor: "rgb(25, 28, 31)",
@@ -72,18 +73,28 @@ export default function Container({ children }: PropsWithChildren) {
                   />
                 </a>
                 <div className="flex space-x-6 items-center">
-                  <a
-                    href=""
-                    className="pt-0.5 text-gray-800 font-medium border-b border-transparent transition-all hover:border-gray-700"
-                  >
-                    Write
-                  </a>
-                  <a
-                    href=""
-                    className="pt-0.5 text-gray-800 font-medium border-b border-transparent transition-all hover:border-gray-700"
-                  >
-                    About
-                  </a>
+                  {[
+                    {
+                      title: "Write",
+                      href: "https://forms.gle/LTDaBGQ1xboHSWC47",
+                    },
+                    {
+                      title: "Staff",
+                      href: "/MQ",
+                    },
+                    {
+                      title: "About",
+                      href: "/Mg",
+                    },
+                  ].map((e, i) => (
+                    <a
+                      href={e.href}
+                      key={i}
+                      className="pt-0.5 text-gray-800 font-medium border-b border-transparent transition-all hover:border-gray-700"
+                    >
+                      {e.title}
+                    </a>
+                  ))}
                   {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                   <a
                     href="/alerts"

@@ -14,8 +14,8 @@ const sizeClassnames = [
   "prose-h2:tracking-tight",
   "prose-h3:text-2xl",
   "prose-p:text-lg",
-  "prose-p:leading-relaxed",
-  "prose-p:my-6",
+  "prose-p:leading-[2]",
+  "prose-p:my-7",
   "prose-code:text-lg",
   "prose-li:text-lg",
   "prose-table:text-lg",
@@ -23,7 +23,7 @@ const sizeClassnames = [
   "prose-ul:my-1.5",
   "prose-ol:pl-12",
   "prose-ul:pl-12",
-  "lg:prose-xl",
+  "lg:prose-2xl",
   "prose",
   "prose-headings:mt-10",
 ];
@@ -46,9 +46,15 @@ export default function Post({ post, section }: any) {
           </p>
           <div
             className={sizeClassnames.join(" ")}
+            style={{
+              zoom: "1.1",
+            }}
             dangerouslySetInnerHTML={{ __html: post.html }}
           />
           <style>{`
+    .prose * {
+      -webkit-font-smoothing: initial !important;
+    }
     .prose :where(li):not(:where([class~="not-prose"] *)) {
       margin-top: .5rem;
       margin-bottom: .5rem;
