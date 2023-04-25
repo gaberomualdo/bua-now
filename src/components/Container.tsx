@@ -143,7 +143,8 @@ export default function Container({ children }: PropsWithChildren) {
           className={`text-white w-full py-10 ${
             router.pathname === "/alerts" || router.pathname === "/"
               ? ""
-              : "mb-16"
+              : // : "mb-16"
+                ""
           }`}
           style={{
             backgroundColor: "rgb(25, 28, 31)",
@@ -164,15 +165,19 @@ export default function Container({ children }: PropsWithChildren) {
                   {[
                     {
                       title: "Instagram",
-                      href: "",
+                      href: "https://instagram.com/bua_now",
                     },
                     {
-                      title: "Write",
-                      href: "",
+                      title: "Contact",
+                      href: "mailto:staff@buanow.com",
                     },
                     {
                       title: "About",
-                      href: "",
+                      href: "/Mg",
+                    },
+                    {
+                      title: "Staff",
+                      href: "/MQ",
                     },
                   ].map((e, i) => (
                     <a
